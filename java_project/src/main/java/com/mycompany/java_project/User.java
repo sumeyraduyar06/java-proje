@@ -15,6 +15,9 @@ public abstract class User {
     private String password;
     private String role;
     
+    //boş constructor
+    public User(){};
+    
     //constructor
     public User(String ID,String name,String surname,String password,String role){
         this.ID=ID;
