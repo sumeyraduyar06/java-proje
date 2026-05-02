@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.java_project;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -29,19 +32,40 @@ public class File_Manager {
     }
     
     //json okuma
-    public void readUsers(String fileName){
+    public List<User> readUsers(String fileName){
+        List<User> userList=new ArrayList<>();
         try{
             FileReader reader=new FileReader(fileName);
             Scanner scan=new Scanner(reader);
             
             while(scan.hasNextLine()){
                 String json=scan.nextLine();
-                User user=gson.fromJson(json, User.class);
-                System.out.println(user.getName()+"-"+user.getRole());
+                JsonObject obj=JsonParser.parseString(json).getAsJsonObject(); //jsonu parçalayoruz
+                String role=obj.get("role").getAsString(); //parçaladıktan sorn aiçinden roleu alıp ona göre user tanımlıyoruz
+                User user;
+                
+                switch(role){//switch ile role göre üyeleri ayırma çünkü user classı abstract
+                    case "member": 
+                        user=gson.fromJson(json, Member.class);
+                        break;
+                    case "trainer":
+                        user=gson.fromJson(json, Trainer.class);
+                        break;
+                    case "admin":
+                        user=gson.fromJson(json, Admin.class);
+                        break;
+                    case "staff":
+                        user=gson.fromJson(json, Staff.class);
+                        break;
+                    default: user=gson.fromJson(json, User.class);       
+                }
+                userList.add(user);
             }
             scan.close();
+            reader.close();
         }catch(Exception e){
             System.out.println("Error:"+e.getMessage());
         }
+        return userList;
     }
 }
