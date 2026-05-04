@@ -7,6 +7,10 @@
  *
  * @author ASUS
  */
+
+import com.mycompany.java_project.User;
+import com.mycompany.java_project.Member;
+        
 public class SignInPanel extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SignInPanel.class.getName());
@@ -35,13 +39,13 @@ public class SignInPanel extends javax.swing.JFrame {
         jTextPane1 = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
+        txtSurname = new javax.swing.JTextField();
+        txtPhoneNo = new javax.swing.JTextField();
+        txtTc = new javax.swing.JTextField();
+        txtHeight = new javax.swing.JTextField();
+        txtWeight = new javax.swing.JTextField();
+        txtAge = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -62,7 +66,7 @@ public class SignInPanel extends javax.swing.JFrame {
         jTextField12 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtPassword = new javax.swing.JPasswordField();
 
         jTextField6.setText("jTextField6");
 
@@ -84,37 +88,37 @@ public class SignInPanel extends javax.swing.JFrame {
         jTextArea1.setText("       Depending on the membership type, you have the right to \n               3 sessions per week for each branch.\nClassic=>Fitness                                     100$\nNormal=>Fitness+Swim                        200$\nPremium=>Fitness+Swim+Yoga           300$");
         jScrollPane1.setViewportView(jTextArea1);
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField1.setText("name");
-        jTextField1.addActionListener(this::jTextField1ActionPerformed);
+        txtName.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtName.setForeground(new java.awt.Color(153, 153, 153));
+        txtName.setText("name");
+        txtName.addActionListener(this::txtNameActionPerformed);
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField2.setText("surname");
+        txtSurname.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtSurname.setForeground(new java.awt.Color(153, 153, 153));
+        txtSurname.setText("surname");
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField4.setText("cell phone");
-        jTextField4.addActionListener(this::jTextField4ActionPerformed);
+        txtPhoneNo.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtPhoneNo.setForeground(new java.awt.Color(153, 153, 153));
+        txtPhoneNo.setText("cell phone");
+        txtPhoneNo.addActionListener(this::txtPhoneNoActionPerformed);
 
-        jTextField5.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField5.setText("tc");
-        jTextField5.addActionListener(this::jTextField5ActionPerformed);
+        txtTc.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtTc.setForeground(new java.awt.Color(153, 153, 153));
+        txtTc.setText("tc");
+        txtTc.addActionListener(this::txtTcActionPerformed);
 
-        jTextField7.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField7.setText("height");
+        txtHeight.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtHeight.setForeground(new java.awt.Color(153, 153, 153));
+        txtHeight.setText("height");
 
-        jTextField8.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField8.setText("weight");
-        jTextField8.addActionListener(this::jTextField8ActionPerformed);
+        txtWeight.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtWeight.setForeground(new java.awt.Color(153, 153, 153));
+        txtWeight.setText("weight");
+        txtWeight.addActionListener(this::txtWeightActionPerformed);
 
-        jTextField9.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jTextField9.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField9.setText("age");
+        txtAge.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtAge.setForeground(new java.awt.Color(153, 153, 153));
+        txtAge.setText("age");
 
         jTextField11.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField11.setForeground(new java.awt.Color(153, 153, 153));
@@ -171,8 +175,9 @@ public class SignInPanel extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setText("Save");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jPasswordField1.setText("jPasswordField1");
+        txtPassword.setText("jPasswordField1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -207,16 +212,16 @@ public class SignInPanel extends javax.swing.JFrame {
                                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField7)
-                            .addComponent(jTextField8)
+                            .addComponent(txtSurname)
+                            .addComponent(txtName)
+                            .addComponent(txtPhoneNo)
+                            .addComponent(txtTc)
+                            .addComponent(txtHeight)
+                            .addComponent(txtWeight)
                             .addComponent(jComboBox1, 0, 1, Short.MAX_VALUE)
-                            .addComponent(jTextField9)
+                            .addComponent(txtAge)
                             .addComponent(jTextField11)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                         .addGap(44, 44, 44)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,7 +235,7 @@ public class SignInPanel extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(23, 23, 23)
                                 .addComponent(jButton1)))))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(480, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,10 +251,10 @@ public class SignInPanel extends javax.swing.JFrame {
                                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel1)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSurname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -257,16 +262,16 @@ public class SignInPanel extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPhoneNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(19, 19, 19)
@@ -276,19 +281,19 @@ public class SignInPanel extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addComponent(jLabel13))))
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtWeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -312,14 +317,14 @@ public class SignInPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 875, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -330,25 +335,25 @@ public class SignInPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textField1ActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txtTcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTcActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_txtTcActionPerformed
 
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtNameActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtPhoneNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtPhoneNoActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void txtWeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWeightActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_txtWeightActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
@@ -361,6 +366,50 @@ public class SignInPanel extends javax.swing.JFrame {
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField10ActionPerformed
+    
+    //EĞER KAYDET BUTONUNA BASILIRSA GEREKLİ KONTROLLER YAPILACAK
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      try{
+      //yeni bir member nesnesi oluşturduk
+      Member newMember=new Member();
+      newMember.setName(txtName.getText());
+      newMember.setSurname(txtSurname.getText());
+      newMember.setPassword(txtPassword.getText());
+      newMember.setTc(txtTc.getText());
+      newMember.setphoneNo(txtPhoneNo.getText());
+      
+      //int olan değişkenlerimize tür dönüşümü yapıyoruz
+      newMember.setHeight(Integer.parseInt(txtHeight.getText()));
+      newMember.setWeight(Integer.parseInt(txtWeight.getText()));
+      newMember.setAge(Integer.parseInt(txtAge.getText()));
+      
+      //kişiyi üye olarak atıyoruz
+      newMember.setRole("member");
+      newMember.setStartDate(java.time.LocalDate.now());
+      newMember.setEndDate(java.time.LocalDate.now().plusMonths(1));
+      //şimdilik direkt üyeliği basic olarak atıyoruz
+      newMember.changeMembershipPlan(Member.Membership.BASIC);
+      
+      //hepsini girerse kayıt başarılıdır
+     javax.swing.JOptionPane.showMessageDialog(this, 
+      "Kayıt başarıyla tamamlandı. Hoşgeldin " + newMember.getName() + "!", 
+      "Kayıt Başarılı", 
+     javax.swing.JOptionPane.INFORMATION_MESSAGE);
+      }
+      
+     catch (NumberFormatException ex) {
+    //Yanlış karakter hataları
+    javax.swing.JOptionPane.showMessageDialog(this, 
+        "Lütfen Yaş, Boy ve Kilo kısımlarına sadece rakam giriniz!", 
+        "Giriş Hatası", 
+        javax.swing.JOptionPane.ERROR_MESSAGE);
+        
+     }catch (IllegalArgumentException ex) {
+    //Tc yaş boy kilo hatalarını yakalayacak
+    javax.swing.JOptionPane.showMessageDialog(this,ex.getMessage(),"Kural Hatası", 
+        javax.swing.JOptionPane.WARNING_MESSAGE);
+}
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -404,25 +453,25 @@ public class SignInPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextPane jTextPane1;
     private java.awt.Label label1;
     private java.awt.TextField textField1;
+    private javax.swing.JTextField txtAge;
+    private javax.swing.JTextField txtHeight;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtPhoneNo;
+    private javax.swing.JTextField txtSurname;
+    private javax.swing.JTextField txtTc;
+    private javax.swing.JTextField txtWeight;
     // End of variables declaration//GEN-END:variables
 }

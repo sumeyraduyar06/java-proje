@@ -34,19 +34,45 @@ public class Java_project {
                 case "admin":
                     System.out.println("Redirecting to admin panel.");
                     break;
-                case "member":
-                    System.out.println("Redirecting to admin panel.");
+               case "member":
+                    try {
+                      // Casting yaparak Genel User nesnesini Member'a çeviriyoruz ki kendi metotlarımızı görebilelim
+                      Member loginMember = (Member) user;
+                      loginMember.checkMembershipStatus();
+                        
+                      // İleride arayüze geçtiğinde burası şöyle olacak:
+                      // UserMainPanel uyeEkrani = new UserMainPanel(girisYapanUye);
+                      // uyeEkrani.setVisible(true);  
+                    } catch (Exception e) {
+                        System.out.println("Üye bilgileri alınırken bir hata oluştu: " + e.getMessage());
+                    }
                     break;
                 case "trainer":
-                    System.out.println("Redirecting to admin panel.");
+                    System.out.println("Redirecting to trainer panel.");
                     break;
                 case "staff":
-                    System.out.println("Redirecting to admin panel.");
+                    System.out.println("Redirecting to staff panel.");
                     break;      
             }
         }else{
             System.out.println("Invalid Login!");
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+   
+        
         
     }
 }
