@@ -19,9 +19,12 @@ public class Member extends User {
         VIP(3,"VIP üye",2.2);
     
     //üyelik özelliklerimizi tanımlıyoruz
-    private final int num;
+    private final int num; //üyelik tipleri 1,2,3 şeklinde
     private final String planName;
-    private final double planPrice;
+    private final double planPrice; //üyelik fiyatı
+    private String start_date;
+    private String end_date;
+    private String assigned_trainer;
     
     private Membership(int num, String planName, double planPrice){
         this.num=num;
@@ -41,5 +44,18 @@ public class Member extends User {
     public double getPlanPrice(){
         return planPrice;
     }
+    
+    public String getStartDate(){
+        return this.start_date;
+    }
+    
+    public String getEndDate(){
+        return this.end_date;
+    }
+    
+    public String getAassignedTrainer(){
+        return this.assigned_trainer;
+    }
+    
    }//enum bitişi
 }
