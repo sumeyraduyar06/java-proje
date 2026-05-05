@@ -9,6 +9,7 @@ import java.util.List;
  * @author ASUS
  */
 public class Admin extends User {
+    
     public void addStaff(User newStaff){
         File_Manager fm=new File_Manager();
         fm.saveUser("users.gson", newStaff);
