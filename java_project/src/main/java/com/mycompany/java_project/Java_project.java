@@ -56,23 +56,6 @@ public class Java_project {
             }
         }else{
             System.out.println("Invalid Login!");
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-   
-        
-        
+        } 
     }
 }
