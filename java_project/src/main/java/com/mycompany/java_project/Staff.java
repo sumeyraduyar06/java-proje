@@ -28,4 +28,8 @@ public class Staff extends User {
     public void timeTracking(){
         
     }
-}
+    
+    public void timeOff(){
+        
+    }
+    }
