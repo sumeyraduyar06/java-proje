@@ -317,14 +317,14 @@ public class SignInPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -370,6 +370,10 @@ public class SignInPanel extends javax.swing.JFrame {
     //EĞER KAYDET BUTONUNA BASILIRSA GEREKLİ KONTROLLER YAPILACAK
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       try{
+        //değerleri text formatından int e dönüştürdük
+        int height = Integer.parseInt(txtHeight.getText());
+        int weight = Integer.parseInt(txtWeight.getText());
+        int age = Integer.parseInt(txtAge.getText());
       //yeni bir member nesnesi oluşturduk
       Member newMember=new Member();
       newMember.setName(txtName.getText());
@@ -378,17 +382,10 @@ public class SignInPanel extends javax.swing.JFrame {
       newMember.setTc(txtTc.getText());
       newMember.setphoneNo(txtPhoneNo.getText());
       
-      //int olan değişkenlerimize tür dönüşümü yapıyoruz
-      newMember.setHeight(Integer.parseInt(txtHeight.getText()));
-      newMember.setWeight(Integer.parseInt(txtWeight.getText()));
-      newMember.setAge(Integer.parseInt(txtAge.getText()));
-      
       //kişiyi üye olarak atıyoruz
       newMember.setRole("member");
-      newMember.setStartDate(java.time.LocalDate.now());
-      newMember.setEndDate();
-      //şimdilik direkt üyeliği basic olarak atıyoruz
-      newMember.changeMembershipPlan(Member.Membership.BASIC);
+      //şimdilik direkt üyeliği fitness olarak atıyoruz
+      newMember.changeMembershipPlan(Member.Membership.FITNESS);
       
       //hepsini girerse kayıt başarılıdır
      javax.swing.JOptionPane.showMessageDialog(this, 

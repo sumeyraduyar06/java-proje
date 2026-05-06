@@ -9,13 +9,14 @@ import java.time.format.DateTimeFormatter;
  *
  * @author ASUS
  */
-public class Staff extends User {
+    public class Staff extends User {
     private double salary;
     private String entryhour;
     private String exithour;
     private String hour;
+    
     //constructor
-    Staff(String ID,String name,String surname,String password,String role,double salary,String entryhour,String exithour,String hour){
+    public Staff(String ID,String name,String surname,String password,String role,double salary,String entryhour,String exithour,String hour){
         super(ID,name,surname,password,role);
         this.salary=salary;
         this.entryhour=entryhour;
@@ -61,25 +62,23 @@ public class Staff extends User {
         System.out.println("Exit recorded at:"+this.exithour);
     }
   
-
-    public void addStaff(){
-        
-    }
-    
-    public void removeStaff(){
-        
-    }
-    
-    public void updateStaff(){
-        
-    }
-    
     public void timeTracking(){
+      if(entryhour!=null && exithour!=null){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         
-    }
-    
-    public void timeOff(){
+        //saat formatına dönüştürdüğümüz giriş çıkış saatlerini işlem yapabilmek için geri zaman formatına dönüştürüyoruz
+        LocalTime entry = LocalTime.parse(entryhour, formatter);
+        LocalTime exit = LocalTime.parse(exithour, formatter);
         
+        // İki zaman arasındaki farkı hesaplar
+        java.time.Duration duration = java.time.Duration.between(entry, exit);
+        long hours = duration.toHours();
+        long minutes = duration.toMinutesPart();
+        this.hour = hours + " saat " + minutes + "dakika";
+        System.out.println("Bugünlük toplam çalışma saati:"+ this.hour);
+      }else{
+        System.out.println("Giriş veye çıkış saati sisteme girilmemiş.");
+      }
     }
    
-}
+}//end

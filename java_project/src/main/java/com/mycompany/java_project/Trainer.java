@@ -9,13 +9,16 @@ import java.util.ArrayList;
  *
  * @author ASUS
  */
-public class Trainer extends User {
+public class Trainer extends Staff {
     private String branch;
     private List<Member> assignedMembers;
     
     //constructor
-    public Trainer(String ID,String name,String surname,String password, String role, String branch){
-        super(ID,name,surname,password,role);
+        Trainer(String ID,String name,String surname,String password,String role,double salary,String entryhour,String exithour,String hour){
+        super(ID,name,surname,password,role,salary,entryhour,exithour,hour);
+        salary=getSalary();
+        entryhour=getEntryHour();
+        exithour=getExitHour();
         this.branch=branch;
         this.assignedMembers=new ArrayList<>();
     }

@@ -23,6 +23,16 @@ public class Member extends User {
     //üyelik başlangıç tarihleri için güncel tarihi çekiyoruz
     LocalDate today = LocalDate.now();
     
+    //constructor
+    public Member(String ID, String name, String surname, String password, String role, String tc, Membership currentPlan) {
+    super(ID, name, surname, password, role); // User sınıfına bilgileri gönderir
+    this.tc = tc;
+    this.currentPlan = currentPlan;
+    this.startDate = LocalDate.now();
+    this.endDate = startDate.plusDays(7);}
+    
+    //boş constructor
+    public Member(){}
     
     //tc boy kilo gibi bilgilerin get set metotları
     public String getTc(){
@@ -99,71 +109,65 @@ public class Member extends User {
     public LocalDate getEndDate(){
         return this.endDate;
     }
-    public void setEndDate() {
-       if(startDate==null){
-           throw new IllegalArgumentException("Hata: Başlanıgıç tarihi girilmeden bitiş tarihi girilemez.");
-       }else{
-           this.endDate=startDate.plusDays(7);
-       }
+    public void setEndDate(LocalDate endDate){
+        if(startDate == null) {
+            throw new IllegalArgumentException("Hata: Başlangıç tarihi girilmeden bitiş tarihi girilemez.");
+        }else{
+            this.endDate = endDate;
+    }
     }
    
     public String getAssignedTrainer(){
-        return this.assignedTrainer;
+        return assignedTrainer;
     }
-    public void setAssignedTrainer(){
-        this.assignedTrainer=assignedTrainer;
+    
+    public void setAssignedTrainer(String assignedTrainer) {
+        this.assignedTrainer = assignedTrainer;
     }
     
    
     //ÜYELİK BİLGİLERİ ENUM SINIFI
-    public enum Membership{
-        BASIC(1,"Standart Plan",100.0),
-        PREMIUM(2,"Premium Plan",200.0),
-        VIP(3,"VIP Plan",300.0);
-    
-    //üyelik özelliklerimizi tanımlıyoruz
-    private final int num; //üyelik tipleri 1,2,3 şeklinde
+   public enum Membership {
+    FITNESS("Sadece Fitness", 100.0),
+    FITNESS_PILATES("Fitness ve Pilates", 200.0),
+    FITNESS_SWIMMING_PILATES("(Fitness+Yüzme+Pilates)", 300.0);
+
     private final String planName;
-    private final double planPrice; //üyelik fiyatı
-    
-    private Membership(int num, String planName, double planPrice){
-        this.num=num;
-        this.planName=planName;
-        this.planPrice=planPrice;
+    private final double planPrice;
+
+    private Membership(String planName, double planPrice) {
+        this.planName = planName;
+        this.planPrice = planPrice;
     }
-    
-    //üyelik özellikleri get metotları
-    public int getNum(){
-        return num;
-    }
-    
-    public String getPlanName(){
-        return planName;
-    }
-    
+   
+    //get metotları
+    public String getPlanName(){ 
+        return planName;}
     public double getPlanPrice(){
-        return planPrice;
-    }
-   }//enum bitişi
+        return planPrice;}
+    
+    }//enum bitiş
       
       //tarihler girilerek üyeliğe kaç gün kaldı öğrenilecilecek
       public long checkMembershipStatus() {
-          long dayCount=ChronoUnit.DAYS.between(today,endDate);
+          // Güncel tarihi anlık olarak burada çekiyoruz
+          long dayCount = ChronoUnit.DAYS.between(LocalDate.now(), endDate);
           return dayCount;
-    }
+      }
       
       //üye yeni plana geçer ve üyeliğin start end tarihleri bugüne göre güncellenir
       public void changeMembershipPlan(Membership newPlan) {
-        this.currentPlan=newPlan;
+        this.currentPlan = newPlan;
         this.setStartDate(LocalDate.now());
-        this.setEndDate();
+        // Bitiş tarihini başlangıçtan 1 haftas sonrası olarak ayarlayıp metoda gönderiyoruz
+        this.setEndDate(this.startDate.plusDays(7));
       }
       
       //eğer yeni plana şimd değil ileri bir tarihte geçiliyorsa
       public void changeMembershipPlan(Membership newPlan, LocalDate startDate){
-          this.currentPlan=newPlan;
+          this.currentPlan = newPlan;
           this.setStartDate(startDate);
-          this.setEndDate();
+          this.setEndDate(this.startDate.plusDays(30));
       }
       
 }//end
