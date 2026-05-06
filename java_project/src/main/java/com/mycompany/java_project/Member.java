@@ -99,11 +99,12 @@ public class Member extends User {
     public LocalDate getEndDate(){
         return this.endDate;
     }
-    public void setEndDate(LocalDate endDate) {
-    if (startDate != null && startDate.isAfter(endDate)) {
-        throw new IllegalArgumentException("Hata: Üyelik paketi bitiş tarihi, başlangıç tarihinden ileri bir tarihte olmalıdır.");} 
-    else{
-        this.endDate = endDate;}
+    public void setEndDate() {
+       if(startDate==null){
+           throw new IllegalArgumentException("Hata: Başlanıgıç tarihi girilmeden bitiş tarihi girilemez.");
+       }else{
+           this.endDate=startDate.plusDays(7);
+       }
     }
    
     public String getAssignedTrainer(){
@@ -116,9 +117,9 @@ public class Member extends User {
    
     //ÜYELİK BİLGİLERİ ENUM SINIFI
     public enum Membership{
-        BASIC(1,"Standart Plan",0.0),
-        PREMIUM(2,"Premium Plan",1.1),
-        VIP(3,"VIP üye",2.2);
+        BASIC(1,"Standart Plan",100.0),
+        PREMIUM(2,"Premium Plan",200.0),
+        VIP(3,"VIP Plan",300.0);
     
     //üyelik özelliklerimizi tanımlıyoruz
     private final int num; //üyelik tipleri 1,2,3 şeklinde
@@ -143,26 +144,26 @@ public class Member extends User {
     public double getPlanPrice(){
         return planPrice;
     }
-    
    }//enum bitişi
       
-    
       //tarihler girilerek üyeliğe kaç gün kaldı öğrenilecilecek
-      public void checkMembershipStatus() {
+      public long checkMembershipStatus() {
           long dayCount=ChronoUnit.DAYS.between(today,endDate);
+          return dayCount;
     }
       
-      //üye yeni plana geçmek isterse
+      //üye yeni plana geçer ve üyeliğin start end tarihleri bugüne göre güncellenir
       public void changeMembershipPlan(Membership newPlan) {
-    // Buraya plan değiştirme kodlarını yazacağız
-    }
+        this.currentPlan=newPlan;
+        this.setStartDate(LocalDate.now());
+        this.setEndDate();
+      }
       
+      //eğer yeni plana şimd değil ileri bir tarihte geçiliyorsa
+      public void changeMembershipPlan(Membership newPlan, LocalDate startDate){
+          this.currentPlan=newPlan;
+          this.setStartDate(startDate);
+          this.setEndDate();
+      }
       
-      
-      
-      
-      
-      
-      
-      
-}
+}//end

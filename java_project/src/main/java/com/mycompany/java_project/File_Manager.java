@@ -68,4 +68,21 @@ public class File_Manager {
         }
         return userList;
     }
+    
+    //json güncelleme
+    public void writeAllUsers(String fileName, List<User> userList){
+        try {
+            //false parametresi dosyayı boşsaltır ve baştan yazar
+            FileWriter writer=new FileWriter(fileName,false);
+           
+            for(User u:userList){
+                String json=gson.toJson(u);//tekrardan silinen hariç her şeyi json formatına dönüştür
+                writer.write(json+"\n"); //dosayaya yaz ve aalt satıra geç
+            }
+            writer.close();
+            System.out.println("File updated successfully!");
+        }catch(Exception e){
+            System.out.println("Update Error:"+e.getMessage());
+        }
+    }
 }
