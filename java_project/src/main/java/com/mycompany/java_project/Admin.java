@@ -13,7 +13,7 @@ public class Admin extends User {
         File_Manager fm=new File_Manager();
         fm.saveUser("users.gson", newStaff);
     }
-    
+ 
     public void removeStaff(String staffID){
         File_Manager fm=new File_Manager(); //kullanıcıları çekme
         List<User> updatedList=fm.readUsers("users.gson");
