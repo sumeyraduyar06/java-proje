@@ -1,3 +1,8 @@
+package com.mycompany.java_project;
+
+
+import com.mycompany.java_project.User;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -17,7 +22,6 @@ public class LoginPanel extends javax.swing.JFrame {
     public LoginPanel() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

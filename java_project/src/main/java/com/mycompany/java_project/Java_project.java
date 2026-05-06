@@ -33,6 +33,7 @@ public class Java_project {
             switch(user.getRole()){
                 case "admin":
                     System.out.println("Redirecting to admin panel.");
+                    new AdminPanel().setVisible(true);
                     break;
                case "member":
                     try {
@@ -41,7 +42,7 @@ public class Java_project {
                       loginMember.checkMembershipStatus();
                         
                       // İleride arayüze geçtiğinde burası şöyle olacak:
-                      // UserMainPanel uyeEkrani = new UserMainPanel(girisYapanUye);
+                      //UserMainPanel uyeEkrani = new UserMainPanel(girisYapanUye);
                       // uyeEkrani.setVisible(true);  
                     } catch (Exception e) {
                         System.out.println("Üye bilgileri alınırken bir hata oluştu: " + e.getMessage());

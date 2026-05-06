@@ -42,9 +42,9 @@ public class File_Manager {
                 String json=scan.nextLine();
                 JsonObject obj=JsonParser.parseString(json).getAsJsonObject(); //jsonu parçalayoruz
                 String role=obj.get("role").getAsString(); //parçaladıktan sorn aiçinden roleu alıp ona göre user tanımlıyoruz
-                User user;
+                User user= null;
                 
-                switch(role){//switch ile role göre üyeleri ayırma çünkü user classı abstract
+                switch(user.getRole().toLowerCase()){//switch ile role göre üyeleri ayırma çünkü user classı abstract
                     case "member": 
                         user=gson.fromJson(json, Member.class);
                         break;
@@ -57,7 +57,8 @@ public class File_Manager {
                     case "staff":
                         user=gson.fromJson(json, Staff.class);
                         break;
-                    default: user=gson.fromJson(json, User.class);       
+                    default: 
+                        throw new IllegalArgumentException("Invalid Role!!"+role);
                 }
                 userList.add(user);
             }

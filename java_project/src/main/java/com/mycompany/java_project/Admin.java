@@ -9,18 +9,23 @@ import java.util.List;
  * @author ASUS
  */
 public class Admin extends User {
+    
+    //contructor
+    public Admin(String ID, String name, String surname, String password, String role){
+    super(ID, name, surname, password, role);
+}
     public void addStaff(User newStaff){
         File_Manager fm=new File_Manager();
-        fm.saveUser("users.gson", newStaff);
+        fm.saveUser("users.json", newStaff);
     }
  
     public void removeStaff(String staffID){
         File_Manager fm=new File_Manager(); //kullanıcıları çekme
-        List<User> updatedList=fm.readUsers("users.gson");
+        List<User> updatedList=fm.readUsers("users.json");
         
         updatedList.removeIf(user->user.getID().equals(staffID)); //çıkarılacak çalışanın ID aracılığı ile bulma
         
-        fm.writeAllUsers("users.gson",updatedList);
+        fm.writeAllUsers("users.json",updatedList);
         System.out.println("Staff with ID:"+staffID+" has been removed!");
         
     }

@@ -1,3 +1,5 @@
+package com.mycompany.java_project;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -370,6 +372,10 @@ public class SignInPanel extends javax.swing.JFrame {
     //EĞER KAYDET BUTONUNA BASILIRSA GEREKLİ KONTROLLER YAPILACAK
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       try{
+          //değerleri text formatından int e dönüştürdük
+        int height = Integer.parseInt(txtHeight.getText());
+        int weight = Integer.parseInt(txtWeight.getText());
+        int age = Integer.parseInt(txtAge.getText());
       //yeni bir member nesnesi oluşturduk
       Member newMember=new Member();
       newMember.setName(txtName.getText());
@@ -378,17 +384,10 @@ public class SignInPanel extends javax.swing.JFrame {
       newMember.setTc(txtTc.getText());
       newMember.setphoneNo(txtPhoneNo.getText());
       
-      //int olan değişkenlerimize tür dönüşümü yapıyoruz
-      newMember.setHeight(Integer.parseInt(txtHeight.getText()));
-      newMember.setWeight(Integer.parseInt(txtWeight.getText()));
-      newMember.setAge(Integer.parseInt(txtAge.getText()));
-      
       //kişiyi üye olarak atıyoruz
       newMember.setRole("member");
-      newMember.setStartDate(java.time.LocalDate.now());
-      newMember.setEndDate();
-      //şimdilik direkt üyeliği basic olarak atıyoruz
-      newMember.changeMembershipPlan(Member.Membership.BASIC);
+       //şimdilik direkt üyeliği fitness olarak atıyoruz
+      newMember.changeMembershipPlan(Member.Membership.FITNESS);
       
       //hepsini girerse kayıt başarılıdır
      javax.swing.JOptionPane.showMessageDialog(this, 

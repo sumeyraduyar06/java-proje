@@ -16,7 +16,7 @@ public class Login_System implements IAuthenticable {
     
     //override
     public User login(String id,String password){
-        List<User> users=fm.readUsers("users.txt");
+        List<User> users=fm.readUsers("users.json");
         
         for(User user:users){
             if(user.getID().equals(id) && user.getPassword().equals(password)){
