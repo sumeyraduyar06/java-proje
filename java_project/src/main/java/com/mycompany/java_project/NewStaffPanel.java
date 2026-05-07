@@ -57,11 +57,7 @@ public class NewStaffPanel extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trainer", "Security Guard", "Cleaner" }));
 
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
-
-        jTextField3.setText("jTextField3");
+        jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
         jButton1.setText("Save");
         jButton1.addActionListener(this::jButton1ActionPerformed);
@@ -73,10 +69,6 @@ public class NewStaffPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(150, 150, 150))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(99, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,6 +90,10 @@ public class NewStaffPanel extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(370, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(162, 162, 162))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,9 +116,9 @@ public class NewStaffPanel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(65, 65, 65)
+                .addGap(43, 43, 43)
                 .addComponent(jButton1)
-                .addGap(108, 108, 108))
+                .addGap(130, 130, 130))
         );
 
         pack();
@@ -134,38 +130,48 @@ public class NewStaffPanel extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-        String name = jTextField1.getText();
-        String surname = jTextField2.getText();
-        String id = jTextField3.getText();
-        String type = jComboBox1.getSelectedItem().toString();
-        
-        // Varsayılan şifre
-        String defaultPass = id; 
-        
-        User newUser;
-        
-        if (type.equals("Trainer")) {
-            newUser = new Trainer(id, name, surname, defaultPass, "trainer", 
-                                  0.0, "", "", "", "General");
-        } else {
-            newUser = new Staff(id, name, surname, defaultPass, "staff", 
-                                0.0, "", "", "");
-        }
+            String name = jTextField1.getText();
+            String surname = jTextField2.getText();
+            String id = jTextField3.getText();
+            String type = jComboBox1.getSelectedItem().toString();
+            
+            // Boş alan kontrolü
+            if(name.isEmpty() || surname.isEmpty() || id.isEmpty()){
+                javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları doldurun!");
+                return;
+            }
 
-        // Dosyaya Kaydet
-        File_Manager fm = new File_Manager();
-        fm.saveUser("users.json", newUser);
+            String defaultPass = id; // İlk girişte şifre ID ile aynı olsun
+            User newUser;
+            
+            if (type.equals("Trainer")) {
+                // Trainer constructor'ınıza göre parametreleri kontrol edin
+                // (id, name, surname, password, role, salary, entry, exit, phone, branch)
+                newUser = new Trainer(id, name, surname, defaultPass, "trainer", 
+                                      0.0, "-", "-", "-", "General");
+            } else {
+                // Staff(id, name, surname, password, role, salary, entry, exit, phone)
+                newUser = new Staff(id, name, surname, defaultPass, "staff", 
+                                    0.0, "-", "-", "-");
+            }
 
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            type + " başarıyla eklendi!\nID ve Şifre: " + id);
-        
-        // AdminPanel'deki tabloların güncellenmesi için AdminPanel'i yenileyebiliriz
-        this.dispose();
+            // Dosyaya Kaydet
+            File_Manager fm = new File_Manager();
+            fm.saveUser("users.json", newUser);
+
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                type + " başarıyla eklendi!\nID ve Şifre varsayılan olarak '" + id + "' yapıldı.");
+            
+            this.dispose(); // Kayıt bitince bu pencereyi kapat
 
         } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Hata oluştu: " + e.getMessage());
-       }
+            javax.swing.JOptionPane.showMessageDialog(this, "Hata oluştu: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -123,7 +123,6 @@ public class StaffPanel extends javax.swing.JFrame {
 
         jTextField6.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField6.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField6.setText("exit hour");
 
         jLabel7.setText("Surname:");
 
@@ -141,20 +140,17 @@ public class StaffPanel extends javax.swing.JFrame {
 
         jTextField7.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField7.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField7.setText("name");
 
         jTextField8.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField8.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField8.setText("surname");
+        jTextField8.addActionListener(this::jTextField8ActionPerformed);
 
         jTextField9.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField9.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField9.setText("salary");
         jTextField9.addActionListener(this::jTextField9ActionPerformed);
 
         jTextField10.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField10.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField10.setText("entry hour");
         jTextField10.addActionListener(this::jTextField10ActionPerformed);
 
         textField2.setBackground(new java.awt.Color(153, 0, 255));
@@ -172,22 +168,6 @@ public class StaffPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(239, 239, 239)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel8))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(38, 38, 38)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(126, 126, 126)
@@ -200,8 +180,19 @@ public class StaffPanel extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(34, 34, 34)
-                        .addComponent(jButton3)))
-                .addContainerGap(206, Short.MAX_VALUE))
+                        .addComponent(jButton3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(102, 102, 102)))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,9 +248,12 @@ public class StaffPanel extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (currentStaff != null) {
-        currentStaff.recordExit(); // Saati kaydet
-        jTextField6.setText(currentStaff.getExitHour()); // Ekranda göster
-        }
+        currentStaff.recordExit(); // Nesne üzerindeki çıkış saatini günceller
+        jTextField6.setText(currentStaff.getExitHour()); // Ekrana yansıtır
+        
+        updateUserInFile(); // Değişikliği dosyaya (users.json) yazar
+        javax.swing.JOptionPane.showMessageDialog(this, "Çıkış saati kaydedildi!");
+    }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
@@ -267,38 +261,38 @@ public class StaffPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField10ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      if (currentStaff != null) {
-        currentStaff.recordEntry(); // Saati kaydet
-        jTextField10.setText(currentStaff.getEntryHour()); // Ekranda göster
-    }  
+    if (currentStaff != null) {
+        currentStaff.recordEntry(); // Nesne üzerindeki giriş saatini günceller
+        jTextField10.setText(currentStaff.getEntryHour()); 
+        
+        updateUserInFile(); // Değişikliği dosyaya (users.json) yazar
+        javax.swing.JOptionPane.showMessageDialog(this, "Giriş saati kaydedildi!");
+    }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void updateUserInFile() {
+    File_Manager fm = new File_Manager();
+    java.util.List<User> allUsers = fm.readUsers("users.json");
+    
+    // Listedeki eski halini bul ve sil, güncel halini ekle
+    allUsers.removeIf(u -> u.getID().equals(currentStaff.getID()));
+    allUsers.add(currentStaff);
+    
+    // Tüm listeyi dosyaya geri yaz
+    fm.writeAllUsers("users.json", allUsers);
+} 
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-        new StaffPanel(null).setVisible(true);
+    java.awt.EventQueue.invokeLater(() -> {
+        new StaffPanel(new Staff("0", "Test", "User", "123", "staff", 0.0, "-", "-", "000")).setVisible(true);
     });
-    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

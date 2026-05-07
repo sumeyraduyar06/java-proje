@@ -53,7 +53,7 @@ public class LoginPanel extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(204, 0, 204));
         jLabel1.setText("VIGOR");
 
-        jLabel2.setText("TC");
+        jLabel2.setText("ID");
 
         jLabel3.setText("Password ");
 
@@ -142,15 +142,15 @@ public class LoginPanel extends javax.swing.JFrame {
                 new AdminPanel().setVisible(true);
                 break;
             case "trainer":
-                new TrainerPanel().setVisible(true);
+                new TrainerPanel((Trainer) loggedUser).setVisible(true);
+                this.dispose();
                 break;
             case "staff":
                 // Eğer giriş yapan personel ise nesneyi cast ederek gönderiyoruz
                 new StaffPanel((Staff) loggedUser).setVisible(true);
                 break;
             case "member":
-                // Üye ana ekranını açar
-                new UserMainPanel().setVisible(true);
+                new UserMainPanel((Member) loggedUser).setVisible(true);
                 break;
             default:
                 javax.swing.JOptionPane.showMessageDialog(this, "Hata: Tanımsız rol (" + role + ")!");

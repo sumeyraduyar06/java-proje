@@ -362,41 +362,35 @@ public class SignInPanel extends javax.swing.JFrame {
     
     //EĞER KAYDET BUTONUNA BASILIRSA GEREKLİ KONTROLLER YAPILACAK
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         try {
-            // Verileri alıyoruz
-            int height = Integer.parseInt(txtHeight.getText());
-            int weight = Integer.parseInt(txtWeight.getText());
-            int age = Integer.parseInt(txtAge.getText());
+        try {
+            String userID = txtTc.getText(); // ID alanını aldık
+            String password = new String(txtPassword.getPassword());
             
-            Member newMember = new Member();
-            newMember.setName(txtName.getText());
-            newMember.setSurname(txtSurname.getText());
-            newMember.setPassword(new String(txtPassword.getPassword()));
-            
-            String userID = txtTc.getText(); 
-            newMember.setID(userID); 
-            newMember.setTc(userID); 
-            
-            newMember.setRole("member");
-            
-            // Plan ve Tarih Ayarları
-            String selectedPlan = jComboBox1.getSelectedItem().toString().toUpperCase();
-            newMember.changeMembershipPlan(Member.Membership.valueOf(selectedPlan));
-            newMember.setStartDate(java.time.LocalDate.now());
-            newMember.setEndDate(java.time.LocalDate.now().plusDays(30));
-            
-            // Kaydetme İşlemi
+            // Member nesnesini dolu constructor ile oluşturuyoruz
+            // Parametreler: ID, Name, Surname, Password, Role, TC, Plan
+            Member newMember = new Member(
+                userID, 
+                txtName.getText(), 
+                txtSurname.getText(), 
+                password, 
+                "member", 
+                userID, 
+                Member.Membership.FITNESS // Varsayılan plan
+            );
+
+            // Ekstra detayları setle
+            newMember.setphoneNo(txtPhoneNo.getText());
+            newMember.setHeight(Integer.parseInt(txtHeight.getText()));
+            newMember.setWeight(Integer.parseInt(txtWeight.getText()));
+            newMember.setAge(Integer.parseInt(txtAge.getText()));
+
             File_Manager fm = new File_Manager();
             fm.saveUser("users.json", newMember); 
-            
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Kayıt Başarılı! ID Numaranız: " + userID);
-            
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Kayıt Başarılı! ID: " + userID);
             new LoginPanel().setVisible(true);
             this.dispose();
 
-        } catch (NumberFormatException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Boy, Kilo ve Yaş sayı olmalıdır!");
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + ex.getMessage());
         }

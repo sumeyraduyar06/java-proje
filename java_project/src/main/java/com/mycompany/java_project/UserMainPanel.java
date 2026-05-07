@@ -10,15 +10,46 @@ package com.mycompany.java_project;
  * @author ASUS
  */
 public class UserMainPanel extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserMainPanel.class.getName());
+    private Member currentMember; // Üyeyi hafızada tutalım
 
-    /**
-     * Creates new form UserMainPanel
-     */
-    public UserMainPanel() {
+    public UserMainPanel(Member member) {
+        this.currentMember = member; // Giriş yapan üyeyi aldık
         initComponents();
+        displayUserInfo();
     }
+    
+    private void displayUserInfo() {
+        if (currentMember != null) {
+            // 1. Üyelik Planını Göster
+            if (currentMember.getMembershipPlan() != null) {
+                jTextField3.setText(currentMember.getMembershipPlan().getPlanName());
+            }
+            jTextField3.setEditable(false);
+
+            // 2. Başlangıç ve Bitiş Tarihlerini Göster
+            String startDate = currentMember.getStartDate() != null ? currentMember.getStartDate().toString() : "Girilmedi";
+            String endDate = currentMember.getEndDate() != null ? currentMember.getEndDate().toString() : "Girilmedi";
+            jTextField4.setText(startDate + " / " + endDate);
+            jTextField4.setEditable(false);
+
+            // 3. Kalan Gün Sayısı
+            long remainingDays = currentMember.checkMembershipStatus();
+            if (remainingDays > 0) {
+                jTextArea2.setText("Hoşgeldin " + currentMember.getName() + "!\n"
+                        + "Üyeliğinin bitmesine " + remainingDays + " gün kaldı.");
+            } else {
+                jTextArea2.setText("Üyeliğinizin süresi dolmuş veya son günü.");
+            }
+
+            // 4. Tabloyu Doldur (BU KISIM ARTIK IF BLOĞU İÇİNDE)
+            javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
+            model.setRowCount(0); // Eski verileri temizle
+            if (currentMember.getAssignedTrainer() != null) {
+                model.addRow(new Object[]{currentMember.getAssignedTrainer(), "Fitness", "08:00-10:00", "Sil"});
+            }
+        }
+    }
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserMainPanel.class.getName());
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +67,6 @@ public class UserMainPanel extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        button2 = new java.awt.Button();
         jTextField3 = new javax.swing.JTextField();
         textField4 = new java.awt.TextField();
         jTextField4 = new javax.swing.JTextField();
@@ -64,8 +94,6 @@ public class UserMainPanel extends javax.swing.JFrame {
         jTextArea2.setText("Atanan bir eğitmen veya pogram bulunmamaktadır.");
         jScrollPane5.setViewportView(jTextArea2);
 
-        button2.setLabel("ADD");
-
         jTextField3.setFont(new java.awt.Font("Sylfaen", 0, 14)); // NOI18N
         jTextField3.setText("ÜYELİK TİPİ");
 
@@ -87,10 +115,16 @@ public class UserMainPanel extends javax.swing.JFrame {
                 "Trainer Name", "Execise Type", "Hours", "Delete"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(jTable2);
 
         button3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         button3.setLabel("Add Program");
+        button3.addActionListener(this::button3ActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -115,9 +149,7 @@ public class UserMainPanel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,13 +157,10 @@ public class UserMainPanel extends javax.swing.JFrame {
                 .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,33 +184,63 @@ public class UserMainPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+             javax.swing.JOptionPane.showMessageDialog(this, 
+            "Eğitmeniniz: " + (currentMember.getAssignedTrainer() != null ? currentMember.getAssignedTrainer() : "Henüz atanmadı") 
+            + "\nProgram detayları için resepsiyona danışın.");      
+    }//GEN-LAST:event_button3ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+             int column = jTable2.columnAtPoint(evt.getPoint()); // Tıklanan sütun
+    int row = jTable2.rowAtPoint(evt.getPoint());    // Tıklanan satır
+
+    // Eğer son sütuna (Delete - 3. sütun) tıklandıysa
+    if (column == 3 && row != -1) {
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Mevcut programınızı ve eğitmeninizi silmek istediğinize emin misiniz?", 
+            "Programı Sil", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            removeAssignedProgram(); // Silme işlemini yapan metot
+        }
+    }
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void removeAssignedProgram() {
+    try {
+        // 1. Üyenin atanmış eğitmenini null yap
+        currentMember.setAssignedTrainer(null);
+
+        // 2. Dosyayı güncelle
+        File_Manager fm = new File_Manager();
+        java.util.List<User> allUsers = fm.readUsers("users.json");
+        
+        // Listeden eski halini bul ve güncelle
+        allUsers.removeIf(u -> u.getID().equals(currentMember.getID()));
+        allUsers.add(currentMember);
+        
+        fm.writeAllUsers("users.json", allUsers);
+
+        // 3. Arayüzü yenile
+        displayUserInfo();
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Program başarıyla kaldırıldı.");
+        
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Silme işlemi sırasında hata: " + e.getMessage());
+    }
+}
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new UserMainPanel().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+        // Test amaçlı boş bir üye ile açıyoruz
+        new UserMainPanel(new Member()).setVisible(true);
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button button2;
     private java.awt.Button button3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

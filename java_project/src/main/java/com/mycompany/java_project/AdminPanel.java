@@ -237,10 +237,10 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
-int column = jTable3.columnAtPoint(evt.getPoint());
+    int column = jTable3.columnAtPoint(evt.getPoint());
     int row = jTable3.rowAtPoint(evt.getPoint());
 
-    if (column == 4) { 
+    if (column == 3) { 
         String userID = jTable3.getValueAt(row, 0).toString(); 
         String userName = jTable3.getValueAt(row, 1).toString(); 
 
