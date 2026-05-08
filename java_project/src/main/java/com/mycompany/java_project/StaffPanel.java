@@ -1,5 +1,5 @@
+package com.mycompany.java_project;
 
-import com.mycompany.java_project.Staff;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -19,31 +19,23 @@ public class StaffPanel extends javax.swing.JFrame {
      * Creates new form StaffPanel
      */
     public StaffPanel(Staff staff) {
-        this.currentStaff = staff; // Hafızaya al
-        initComponents();
-        
-        // --- TAM OLARAK BURAYA YAZACAKSIN ---
-        
-        // 1. Kutucukları kilitliyoruz (Diyagramdaki AD, SOYAD, MAAŞ alanları)
-        jTextField1.setEditable(false); // Name
-        jTextField2.setEditable(false); // Surname
-        jTextField3.setEditable(false); // Salary
-        jTextField4.setEditable(false); // Entry Hour
-        jTextField5.setEditable(false); // Exit Hour
-        
-        // 2. Personel verilerini ekrana basıyoruz
-        if (currentStaff != null) {
-            jTextField1.setText(currentStaff.getName());
-            jTextField2.setText(currentStaff.getSurname());
-            jTextField3.setText(String.valueOf(currentStaff.getSalary()));
-            
-            // Eğer daha önceden kayıtlı saatler varsa onları göster
-            jTextField4.setText(currentStaff.getEntryHour());
-            jTextField5.setText(currentStaff.getExitHour());
-        }
-        
-        // --- BURAYA KADAR ---
+    this.currentStaff = staff;
+    initComponents();
+    
+    jTextField7.setEditable(false); //name
+    jTextField8.setEditable(false); // Surname
+    jTextField9.setEditable(false); // Salary
+    jTextField10.setEditable(false); // Entry Hour
+    jTextField6.setEditable(false); // Exit Hour 
+
+    if (currentStaff != null) {
+        jTextField7.setText(currentStaff.getName());
+        jTextField8.setText(currentStaff.getSurname());
+        jTextField9.setText(String.valueOf(currentStaff.getSalary()));
+        jTextField10.setText(currentStaff.getEntryHour());
+        jTextField6.setText(currentStaff.getExitHour());
     }
+}
     
 
     /**
@@ -131,15 +123,16 @@ public class StaffPanel extends javax.swing.JFrame {
 
         jTextField6.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField6.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField6.setText("exit hour");
 
         jLabel7.setText("Surname:");
 
         jButton3.setText("save entry");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
 
         jLabel8.setText("Salary:");
 
         jButton4.setText("save exit");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
 
         jLabel9.setText("Entry Hour:");
 
@@ -147,20 +140,18 @@ public class StaffPanel extends javax.swing.JFrame {
 
         jTextField7.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField7.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField7.setText("name");
 
         jTextField8.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField8.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField8.setText("surname");
+        jTextField8.addActionListener(this::jTextField8ActionPerformed);
 
         jTextField9.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField9.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField9.setText("salary");
         jTextField9.addActionListener(this::jTextField9ActionPerformed);
 
         jTextField10.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField10.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField10.setText("entry hour");
+        jTextField10.addActionListener(this::jTextField10ActionPerformed);
 
         textField2.setBackground(new java.awt.Color(153, 0, 255));
         textField2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -175,63 +166,61 @@ public class StaffPanel extends javax.swing.JFrame {
                 .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(239, 239, 239)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addComponent(jLabel10)
+                        .addGap(126, 126, 126)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(78, 78, 78)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel8)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3)))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(102, 102, 102)))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addGap(141, 141, 141)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         pack();
@@ -257,32 +246,53 @@ public class StaffPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (currentStaff != null) {
+        currentStaff.recordExit(); // Nesne üzerindeki çıkış saatini günceller
+        jTextField6.setText(currentStaff.getExitHour()); // Ekrana yansıtır
+        
+        updateUserInFile(); // Değişikliği dosyaya (users.json) yazar
+        javax.swing.JOptionPane.showMessageDialog(this, "Çıkış saati kaydedildi!");
+    }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField10ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    if (currentStaff != null) {
+        currentStaff.recordEntry(); // Nesne üzerindeki giriş saatini günceller
+        jTextField10.setText(currentStaff.getEntryHour()); 
+        
+        updateUserInFile(); // Değişikliği dosyaya (users.json) yazar
+        javax.swing.JOptionPane.showMessageDialog(this, "Giriş saati kaydedildi!");
+    }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void updateUserInFile() {
+    File_Manager fm = new File_Manager();
+    java.util.List<User> allUsers = fm.readUsers("users.json");
+    
+    // Listedeki eski halini bul ve sil, güncel halini ekle
+    allUsers.removeIf(u -> u.getID().equals(currentStaff.getID()));
+    allUsers.add(currentStaff);
+    
+    // Tüm listeyi dosyaya geri yaz
+    fm.writeAllUsers("users.json", allUsers);
+} 
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-        new StaffPanel(null).setVisible(true);
+    java.awt.EventQueue.invokeLater(() -> {
+        new StaffPanel(new Staff("0", "Test", "User", "123", "staff", 0.0, "-", "-", "000")).setVisible(true);
     });
-    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

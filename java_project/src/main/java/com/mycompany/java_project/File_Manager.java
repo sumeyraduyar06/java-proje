@@ -32,43 +32,45 @@ public class File_Manager {
     }
     
     //json okuma
-    public List<User> readUsers(String fileName){
-        List<User> userList=new ArrayList<>();
-        try{
-            FileReader reader=new FileReader(fileName);
-            Scanner scan=new Scanner(reader);
+     public List<User> readUsers(String fileName) {
+        List<User> userList = new ArrayList<>();
+        java.io.File file = new java.io.File(fileName);
+        if (!file.exists()) return userList; 
+
+        try (FileReader reader = new FileReader(file);
+             Scanner scan = new Scanner(reader)) {
             
-            while(scan.hasNextLine()){
-                String json=scan.nextLine();
-                JsonObject obj=JsonParser.parseString(json).getAsJsonObject(); //jsonu parçalayoruz
-                String role=obj.get("role").getAsString(); //parçaladıktan sorn aiçinden roleu alıp ona göre user tanımlıyoruz
-                User user;
-                
-                switch(role){//switch ile role göre üyeleri ayırma çünkü user classı abstract
-                    case "member": 
-                        user=gson.fromJson(json, Member.class);
+            while (scan.hasNextLine()) {
+                String json = scan.nextLine();
+                if (json.trim().isEmpty()) continue;
+
+                JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                // BURASI DÜZELTİLDİ: user.getRole() yerine obj'den gelen role bakıyoruz
+                String role = obj.get("role").getAsString(); 
+                User user = null;
+
+                switch (role.toLowerCase()) {
+                    case "member":
+                        user = gson.fromJson(json, Member.class);
                         break;
                     case "trainer":
-                        user=gson.fromJson(json, Trainer.class);
+                        user = gson.fromJson(json, Trainer.class);
                         break;
                     case "admin":
-                        user=gson.fromJson(json, Admin.class);
+                        user = gson.fromJson(json, Admin.class);
                         break;
                     case "staff":
-                        user=gson.fromJson(json, Staff.class);
+                        user = gson.fromJson(json, Staff.class);
                         break;
-                    default: user=gson.fromJson(json, User.class);       
                 }
-                userList.add(user);
+                if (user != null) userList.add(user);
             }
-            scan.close();
-            reader.close();
-        }catch(Exception e){
-            System.out.println("Error:"+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Okuma Hatası: " + e.getMessage());
         }
         return userList;
     }
-    
+     
     //json güncelleme
     public void writeAllUsers(String fileName, List<User> userList){
         try {

@@ -46,6 +46,9 @@ public class Member extends User {
             this.tc=tc;
         }
     }
+    public Membership getMembershipPlan() {
+    return this.currentPlan;
+    }
     
      public String getphoneNo(){
         return phoneNo;}
