@@ -185,9 +185,7 @@ public class UserMainPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-             javax.swing.JOptionPane.showMessageDialog(this, 
-            "Eğitmeniniz: " + (currentMember.getAssignedTrainer() != null ? currentMember.getAssignedTrainer() : "Henüz atanmadı") 
-            + "\nProgram detayları için resepsiyona danışın.");      
+             new ProgramManagerPanel().setVisible(true);
     }//GEN-LAST:event_button3ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked

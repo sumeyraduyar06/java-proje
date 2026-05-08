@@ -11,13 +11,29 @@ import com.google.gson.JsonParser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import com.google.gson.*;
+import java.lang.reflect.Type;
+import java.time.LocalDate;
 
 /**
  *
  * @author ASUS
  */
 public class File_Manager {
-    Gson gson=new Gson();
+    Gson gson = new GsonBuilder()
+    .registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
+        @Override
+        public JsonElement serialize(LocalDate date, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(date.toString()); // JSON'a "2026-05-09" olarak yazar
+        }
+    })
+    .registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+        @Override
+        public LocalDate deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+            return LocalDate.parse(json.getAsString()); // JSON'dan okurken tekrar objeye çevirir
+        }
+    })
+    .create();
     
     //json yazma
     public void saveUser(String fileName,User user){
