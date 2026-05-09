@@ -1,1 +1,8 @@
-{"tc":"12345","phoneNo":"5555555555","height":164,"weight":60,"age":19,"startDate":"2026-05-09","endDate":"2026-05-16","currentPlan":"FITNESS","today":"2026-05-09","ID":"12345","name":"sude","surname":"12345","password":"12345","role":"member"}
+{"ID":"12345678912","name":"Aybike","surname":"Şimşek","password":"Vigor2026","role":"admin"}
+{"ID":"12345678912","name":"Aybike","surname":"Şimşek","password":"Vigor2026","role":"admin"}
+{"ID":"12345678912","name":"Aybike","surname":"Şimşek","password":"Vigor2026","role":"admin"}
+{"ID":"12345678912","name":"Aybike","surname":"Şimşek","password":"Vigor2026","role":"admin"}
+{"salary":0.0,"entryhour":"22:43","exithour":"22:43","hour":"-","ID":"12312312312","name":"saliha","surname":"akay","password":"12312312312","role":"staff"}
+{"ID":"12345678912","name":"Aybike","surname":"Şimşek","password":"Vigor2026","role":"admin"}
+{"branch":"Swim","assignedMembers":[],"salary":15.0,"entryhour":"01:14","exithour":"01:14","hour":"-","ID":"9876","name":"mustafa","surname":"kayık","password":"9876","role":"trainer"}
+{"assignedDate":"11.05.2026","assignedTimeSlot":"08.00-10.00","tc":"12345","phoneNo":"5555555555","height":164,"weight":60,"age":19,"startDate":"2026-05-09","endDate":"2026-05-16","assignedTrainer":"mustafa kayık","currentPlan":"FITNESS","today":"2026-05-09","ID":"12345","name":"sude","surname":"12345","password":"12345","role":"member"}

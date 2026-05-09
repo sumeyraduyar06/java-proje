@@ -38,6 +38,8 @@ public class NewStaffPanel extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,12 +57,16 @@ public class NewStaffPanel extends javax.swing.JFrame {
 
         jLabel4.setText("Employee Type:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trainer", "Security Guard", "Cleaner" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Swim Trainer", "Fitness Trainer", "Yoga Trainer", "Security Guard", "Cleaner" }));
 
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
         jButton1.setText("Save");
         jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jLabel5.setText("Salary:");
+
+        jTextField4.addActionListener(this::jTextField4ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,6 +75,10 @@ public class NewStaffPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(162, 162, 162))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(99, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,20 +96,20 @@ public class NewStaffPanel extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(370, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(162, 162, 162))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -112,7 +122,11 @@ public class NewStaffPanel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(48, 48, 48)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -129,30 +143,40 @@ public class NewStaffPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_textField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
+      try {
             String name = jTextField1.getText();
             String surname = jTextField2.getText();
             String id = jTextField3.getText();
             String type = jComboBox1.getSelectedItem().toString();
+            String salaryStr = jTextField4.getText();
             
             // Boş alan kontrolü
-            if(name.isEmpty() || surname.isEmpty() || id.isEmpty()){
-                javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları doldurun!");
+            if(name.isEmpty() || surname.isEmpty() || id.isEmpty() || salaryStr.isEmpty()){
+                javax.swing.JOptionPane.showMessageDialog(this, "Lütfen maaş dahil tüm alanları doldurun!");
                 return;
             }
 
-            String defaultPass = id; // İlk girişte şifre ID ile aynı olsun
+            double salary = Double.parseDouble(salaryStr); // Maaşı sayıya çeviriyoruz
+            String defaultPass = id; // İlk girişte şifre ID olsun
             User newUser;
             
-            if (type.equals("Trainer")) {
-                // Trainer constructor'ınıza göre parametreleri kontrol edin
-                // (id, name, surname, password, role, salary, entry, exit, phone, branch)
+            // Antrenör branşlarını ve Staff ayrımını yapıyoruz
+            if (type.contains("Trainer")) {
+                String branch = "General";
+                if (type.equals("Swim Trainer")) branch = "Swim";
+                else if (type.equals("Fitness Trainer")) branch = "Fitness";
+                else if (type.equals("Yoga Trainer")) branch = "Yoga";
+
+                // Trainer(id, name, surname, password, role, salary, entry, exit, hour, branch)
                 newUser = new Trainer(id, name, surname, defaultPass, "trainer", 
-                                      0.0, "-", "-", "-", "General");
+                                      salary, "-", "-", "-", branch);
             } else {
-                // Staff(id, name, surname, password, role, salary, entry, exit, phone)
+                // Diğer personel rolleri (Security Guard, Cleaner)
+                String role = type.toLowerCase().replace(" ", "_"); // "security_guard" formatına getirir
+                // Staff(id, name, surname, password, role, salary, entry, exit, hour)
                 newUser = new Staff(id, name, surname, defaultPass, "staff", 
-                                    0.0, "-", "-", "-");
+                                    salary, "-", "-", "-");
+                // Eğer rollerin tam olarak "staff" kalmasını istiyorsan direkt "staff" da yazabilirsin.
             }
 
             // Dosyaya Kaydet
@@ -160,10 +184,13 @@ public class NewStaffPanel extends javax.swing.JFrame {
             fm.saveUser("users.json", newUser);
 
             javax.swing.JOptionPane.showMessageDialog(this, 
-                type + " başarıyla eklendi!\nID ve Şifre varsayılan olarak '" + id + "' yapıldı.");
+                type + " başarıyla eklendi!\nID ve Şifre: " + id + "\nBranş: " + 
+                (newUser instanceof Trainer ? ((Trainer)newUser).getBranch() : "N/A"));
             
-            this.dispose(); // Kayıt bitince bu pencereyi kapat
+            this.dispose(); 
 
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Maaş alanına lütfen sadece rakam giriniz!");
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Hata oluştu: " + e.getMessage());
         }
@@ -172,6 +199,10 @@ public class NewStaffPanel extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,9 +236,11 @@ public class NewStaffPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private java.awt.TextField textField1;
     // End of variables declaration//GEN-END:variables
 }

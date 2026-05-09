@@ -11,6 +11,8 @@ import java.time.temporal.ChronoUnit;
  */
 
 public class Member extends User {
+    private String assignedDate;
+   private String assignedTimeSlot;
     private String tc;
     private String phoneNo;
     private int height;
@@ -84,6 +86,20 @@ public class Member extends User {
          this.weight=weight;}
      }
      
+     String getAssignedDate(){
+         return this.assignedDate;
+     }
+     public void setAssignedDate(String assignedDate){
+         this.assignedDate=assignedDate;
+     }
+     
+     
+     String getAssignedTimeSlot(){
+         return this.assignedTimeSlot;
+     }
+     void setAssignedTimeSlot(String assignedTimeSlot){
+         this.assignedTimeSlot=assignedTimeSlot;
+     }
      public int getAge(){
          return age;}
      public void setAge(int age){

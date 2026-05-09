@@ -21,54 +21,48 @@ package com.mycompany.java_project;
 
     private void populateTrainerInfo() {
         if (currentTrainer != null) {
-            jTextField2.setText(currentTrainer.getName());    // Name
-            jTextField3.setText(currentTrainer.getSurname()); // Surname
-            jTextField1.setText(String.valueOf(currentTrainer.getSalary())); // Salary
+            jTextField2.setText(currentTrainer.getName());
+            jTextField3.setText(currentTrainer.getSurname());
+            jTextField1.setText(String.valueOf(currentTrainer.getSalary()));
             
-            // Kutuları kilitliyoruz
+            // SAATLERİ BURAYA EKLE (Açılışta görünmesi için)
+            jTextField4.setText(currentTrainer.getEntryHour() != null ? currentTrainer.getEntryHour() : "-");
+            jTextField5.setText(currentTrainer.getExitHour() != null ? currentTrainer.getExitHour() : "-");
+
             jTextField1.setEditable(false);
             jTextField2.setEditable(false);
             jTextField3.setEditable(false);
+            jTextField4.setEditable(false);
+            jTextField5.setEditable(false);
         }
     }
     
     private void setupScheduleTable() {
         String[] hours = {"08:00-10:00", "10:00-12:00", "13:00-15:00", "15:00-17:00"};
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
-        
-        model.setRowCount(0); // Tabloyu temizle
-        
-        for (String hour : hours) {
-            // İlk sütun saat, diğerleri (7 gün) şimdilik boş
-            model.addRow(new Object[]{hour, "BOŞ", "BOŞ", "BOŞ", "BOŞ", "BOŞ", "BOŞ", "BOŞ"});
-        }
+    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
+    model.setRowCount(0);
+    
+    // 1. Sütun isimlerini (Tarihleri) hazırla
+    String[] columnNames = new String[8];
+    columnNames[0] = "Hours";
+    java.time.format.DateTimeFormatter dtf = java.time.format.DateTimeFormatter.ofPattern("dd.MM");
+    
+    for (int i = 0; i < 7; i++) {
+        columnNames[i + 1] = java.time.LocalDate.now().plusDays(i).format(dtf);
+    }
+    model.setColumnIdentifiers(columnNames); // Tablo başlıklarını güncelle
 
-        // RENKLENDİRME MOTORU:
-        jTable2.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer() {
-            @Override
-            public java.awt.Component getTableCellRendererComponent(javax.swing.JTable table, Object value,
-                    boolean isSelected, boolean hasFocus, int row, int column) {
-                
-                java.awt.Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                
-                // İlk sütun (Saatler) gri kalsın
-                if (column == 0) {
-                    c.setBackground(java.awt.Color.LIGHT_GRAY);
-                    c.setForeground(java.awt.Color.BLACK);
-                } else {
-                    // Hücre içeriğine göre renk seçimi
-                    String status = (value != null) ? value.toString() : "";
-                    if (status.equals("DOLU")) {
-                        c.setBackground(java.awt.Color.RED);
-                        c.setForeground(java.awt.Color.WHITE);
-                    } else {
-                        c.setBackground(java.awt.Color.BLUE);
-                        c.setForeground(java.awt.Color.WHITE);
-                    }
-                }
-                return c;
-            }
-        });
+    // 2. Satırları doldur ve BOŞ/DOLU kontrolü yap
+    for (String hour : hours) {
+        Object[] row = new Object[8];
+        row[0] = hour;
+        for (int i = 1; i <= 7; i++) {
+            // ŞİMDİLİK: Rastgele veya Member verisinden gelen bir kontrol eklenebilir
+            // Gerçek projede burada bir 'checkIfTrainerIsBusy(trainer, date, hour)' metodu olmalı
+            row[i] = "BOŞ"; 
+        }
+        model.addRow(row);
+    }
     }
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TrainerPanel.class.getName());
@@ -98,6 +92,12 @@ package com.mycompany.java_project;
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -141,6 +141,18 @@ package com.mycompany.java_project;
         ));
         jScrollPane3.setViewportView(jTable2);
 
+        jLabel4.setText("Entry Hour:");
+
+        jLabel5.setText("Exit Hour:");
+
+        jButton1.setText("Save Entry");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jTextField4.addActionListener(this::jTextField4ActionPerformed);
+
+        jButton2.setText("Save Exit");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -151,23 +163,34 @@ package com.mycompany.java_project;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(152, 152, 152)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(151, 151, 151)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -177,18 +200,24 @@ package com.mycompany.java_project;
                 .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -207,6 +236,35 @@ package com.mycompany.java_project;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+if (currentTrainer != null) {
+            currentTrainer.recordEntry(); 
+            jTextField4.setText(currentTrainer.getEntryHour()); 
+            updateTrainerInFile(); 
+            javax.swing.JOptionPane.showMessageDialog(this, "Giriş saati kaydedildi!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+private void updateTrainerInFile() {
+        File_Manager fm = new File_Manager();
+        java.util.List<User> allUsers = fm.readUsers("users.json");
+        allUsers.removeIf(u -> u.getID().equals(currentTrainer.getID()));
+        allUsers.add(currentTrainer);
+        fm.writeAllUsers("users.json", allUsers);
+}
+    
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+if (currentTrainer != null) {
+            currentTrainer.recordExit(); 
+            jTextField5.setText(currentTrainer.getExitHour()); 
+            updateTrainerInFile(); 
+            javax.swing.JOptionPane.showMessageDialog(this, "Çıkış saati kaydedildi!");
+        }       
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -218,10 +276,14 @@ package com.mycompany.java_project;
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -231,6 +293,8 @@ package com.mycompany.java_project;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     private java.awt.TextField textField1;
     // End of variables declaration//GEN-END:variables
 }

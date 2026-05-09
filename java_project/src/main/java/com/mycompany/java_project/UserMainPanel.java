@@ -20,36 +20,48 @@ public class UserMainPanel extends javax.swing.JFrame {
     
     private void displayUserInfo() {
         if (currentMember != null) {
-            // 1. Üyelik Planını Göster
-            if (currentMember.getMembershipPlan() != null) {
-                jTextField3.setText(currentMember.getMembershipPlan().getPlanName());
-            }
-            jTextField3.setEditable(false);
+        // 1. Üyelik Planını Göster
+        if (currentMember.getMembershipPlan() != null) {
+            jTextField3.setText(currentMember.getMembershipPlan().getPlanName());
+        }
+        jTextField3.setEditable(false);
 
-            // 2. Başlangıç ve Bitiş Tarihlerini Göster
-            String startDate = currentMember.getStartDate() != null ? currentMember.getStartDate().toString() : "Girilmedi";
-            String endDate = currentMember.getEndDate() != null ? currentMember.getEndDate().toString() : "Girilmedi";
-            jTextField4.setText(startDate + " / " + endDate);
-            jTextField4.setEditable(false);
+        // 2. Tarihleri Göster
+        String startDate = currentMember.getStartDate() != null ? currentMember.getStartDate().toString() : "Girilmedi";
+        String endDate = currentMember.getEndDate() != null ? currentMember.getEndDate().toString() : "Girilmedi";
+        jTextField4.setText(startDate + " / " + endDate);
+        jTextField4.setEditable(false);
 
-            // 3. Kalan Gün Sayısı
-            long remainingDays = currentMember.checkMembershipStatus();
-            if (remainingDays > 0) {
-                jTextArea2.setText("Hoşgeldin " + currentMember.getName() + "!\n"
-                        + "Üyeliğinin bitmesine " + remainingDays + " gün kaldı.");
-            } else {
-                jTextArea2.setText("Üyeliğinizin süresi dolmuş veya son günü.");
-            }
+        // 3. Kalan Gün
+        long remainingDays = currentMember.checkMembershipStatus();
+        if (remainingDays > 0) {
+            jTextArea2.setText("Hoşgeldin " + currentMember.getName() + "!\n"
+                    + "Üyeliğinin bitmesine " + remainingDays + " gün kaldı.");
+        } else {
+            jTextArea2.setText("Üyeliğinizin süresi dolmuş veya son günü.");
+        }
 
-            // 4. Tabloyu Doldur (BU KISIM ARTIK IF BLOĞU İÇİNDE)
-            javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
-            model.setRowCount(0); // Eski verileri temizle
-            if (currentMember.getAssignedTrainer() != null) {
-                model.addRow(new Object[]{currentMember.getAssignedTrainer(), "Fitness", "08:00-10:00", "Sil"});
-            }
+        // 4. Tabloyu Doldur (Randevu Detayları)
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0); // Temizle
+        
+        if (currentMember.getAssignedTrainer() != null) {
+            // Tarih ve saat bilgisini birleştirerek tabloya ekliyoruz
+            String scheduleInfo = (currentMember.getAssignedDate() != null ? currentMember.getAssignedDate() : "") 
+                                 + " " + (currentMember.getAssignedTimeSlot() != null ? currentMember.getAssignedTimeSlot() : "");
+            
+            model.addRow(new Object[]{
+                currentMember.getAssignedTrainer(), 
+                "Egzersiz", 
+                scheduleInfo, 
+                "Sil"
+            });
         }
     }
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserMainPanel.class.getName());
+          
+    }
+    
+private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(UserMainPanel.class.getName());
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -185,7 +197,8 @@ public class UserMainPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
-             new ProgramManagerPanel().setVisible(true);
+   new ProgramManagerPanel(currentMember).setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_button3ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
@@ -205,27 +218,25 @@ public class UserMainPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void removeAssignedProgram() {
-    try {
-        // 1. Üyenin atanmış eğitmenini null yap
+   try {
+        // Tüm randevu bilgilerini temizle
         currentMember.setAssignedTrainer(null);
+        currentMember.setAssignedDate(null);
+        currentMember.setAssignedTimeSlot(null);
 
-        // 2. Dosyayı güncelle
+        // JSON dosyasını güncelle
         File_Manager fm = new File_Manager();
         java.util.List<User> allUsers = fm.readUsers("users.json");
-        
-        // Listeden eski halini bul ve güncelle
         allUsers.removeIf(u -> u.getID().equals(currentMember.getID()));
         allUsers.add(currentMember);
-        
         fm.writeAllUsers("users.json", allUsers);
 
-        // 3. Arayüzü yenile
+        // Arayüzü yenile
         displayUserInfo();
-        
         javax.swing.JOptionPane.showMessageDialog(this, "Program başarıyla kaldırıldı.");
         
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Silme işlemi sırasında hata: " + e.getMessage());
+        javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + e.getMessage());
     }
 }
     /**
