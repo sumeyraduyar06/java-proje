@@ -202,10 +202,9 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
     }//GEN-LAST:event_button3ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-             int column = jTable2.columnAtPoint(evt.getPoint()); // Tıklanan sütun
-    int row = jTable2.rowAtPoint(evt.getPoint());    // Tıklanan satır
+             int column = jTable2.columnAtPoint(evt.getPoint()); 
+    int row = jTable2.rowAtPoint(evt.getPoint());    
 
-    // Eğer son sütuna (Delete - 3. sütun) tıklandıysa
     if (column == 3 && row != -1) {
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
             "Mevcut programınızı ve eğitmeninizi silmek istediğinize emin misiniz?", 
@@ -244,7 +243,6 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-        // Test amaçlı boş bir üye ile açıyoruz
         new UserMainPanel(new Member()).setVisible(true);
     });
     }

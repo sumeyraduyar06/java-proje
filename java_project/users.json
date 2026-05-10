@@ -9,6 +9,7 @@
 {"salary":100.0,"entryhour":"13:09","exithour":"13:09","hour":"-","ID":"0127","name":"hilal","surname":"yelekçi","password":"0127","role":"staff"}
 {"assignedDate":"13.05.2026","assignedTimeSlot":"13.00-15.00","tc":"12345","phoneNo":"5555555555","height":164,"weight":60,"age":19,"startDate":"2026-05-09","endDate":"2026-05-16","assignedTrainer":"kemal sunal","currentPlan":"FITNESS","today":"2026-05-09","ID":"12345","name":"sude","surname":"12345","password":"12345","role":"member"}
 {"tc":"8989","phoneNo":"5461900627","height":200,"weight":52,"age":40,"startDate":"2026-05-10","endDate":"2026-06-10","currentPlan":"FITNESS_SWIMMING_PILATES","today":"2026-05-10","ID":"8989","name":"can","surname":"bonomo","password":"8989","role":"member"}
-{"branch":"Fitness","assignedMembers":[],"salary":20.0,"entryhour":"13:40","exithour":"13:40","hour":"-","ID":"5456","name":"kemal","surname":"sunal","password":"5456","role":"trainer"}
 {"branch":"Pilates","assignedMembers":[],"salary":20000.0,"entryhour":"-","exithour":"-","hour":"-","ID":"5656","name":"barış","surname":"akarsu","password":"5656","role":"trainer"}
 {"assignedDate":"10.05.2026","assignedTimeSlot":"13.00-15.00","tc":"3434","phoneNo":"5461900627","height":200,"weight":56,"age":46,"startDate":"2026-05-10","endDate":"2026-06-10","assignedTrainer":"barış akarsu","currentPlan":"FITNESS_PILATES","today":"2026-05-10","ID":"3434","name":"barış","surname":"manço","password":"3434","role":"member"}
+{"ID":"12345678912","name":"Aybike","surname":"Şİmşek","password":"Vigor2026","role":"admin"}
+{"branch":"Fitness","assignedMembers":[],"salary":20.0,"entryhour":"15:50","exithour":"15:50","hour":"-","ID":"5456","name":"kemal","surname":"sunal","password":"5456","role":"trainer"}

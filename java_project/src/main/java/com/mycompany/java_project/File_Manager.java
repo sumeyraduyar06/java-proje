@@ -5,9 +5,6 @@
 package com.mycompany.java_project;
 import java.io.FileReader;
 import java.io.FileWriter;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

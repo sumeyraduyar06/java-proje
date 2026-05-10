@@ -25,7 +25,6 @@ package com.mycompany.java_project;
             jTextField3.setText(currentTrainer.getSurname());
             jTextField1.setText(String.valueOf(currentTrainer.getSalary()));
             
-            // SAATLERİ BURAYA EKLE (Açılışta görünmesi için)
             jTextField4.setText(currentTrainer.getEntryHour() != null ? currentTrainer.getEntryHour() : "-");
             jTextField5.setText(currentTrainer.getExitHour() != null ? currentTrainer.getExitHour() : "-");
 
@@ -293,7 +292,6 @@ if (currentTrainer != null) {
      */
     public static void main(String args[]) {
     java.awt.EventQueue.invokeLater(() -> {
-        // Test amaçlı boş bir Trainer gönderiyoruz
         new TrainerPanel(new Trainer("0", "Deneme", "Hoca", "123", "trainer", 15000, "", "", "", "Fitness")).setVisible(true);
     });
 }

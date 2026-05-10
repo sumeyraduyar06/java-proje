@@ -15,11 +15,9 @@ import javax.swing.JOptionPane;
  */
 
 public class ProgramManagerPanel extends javax.swing.JFrame {
-    // Burası yazılabilir olmalı, değişkenleri buraya koy:
     private Member currentMember; 
     private String chosenDate;
     private File_Manager fm = new File_Manager();
-// Constructor'ı Member alacak şekilde güncelle
 
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProgramManagerPanel.class.getName());
@@ -42,24 +40,23 @@ public class ProgramManagerPanel extends javax.swing.JFrame {
     if (currentMember != null && currentMember.getMembershipPlan() != null) {
         String planName = currentMember.getMembershipPlan().name(); // FITNESS, FITNESS_PILATES vb.
         
-        // Hata ayıklama için konsola bak:
         System.out.println("DEBUG: Member Plan Name -> " + planName);
 
         switch (planName) {
             case "FITNESS":
                 jComboBox1.addItem("Fitness");
-                break; // MUTLAKA OLMALI
+                break; 
                 
             case "FITNESS_PILATES":
                 jComboBox1.addItem("Fitness");
                 jComboBox1.addItem("Pilates");
-                break; // MUTLAKA OLMALI
+                break; 
                 
             case "FITNESS_SWIMMING_PILATES":
                 jComboBox1.addItem("Fitness");
                 jComboBox1.addItem("Swim");
                 jComboBox1.addItem("Pilates");
-                break; // MUTLAKA OLMALI
+                break; 
                 
             default:
                 jComboBox1.addItem("Fitness");
@@ -217,7 +214,6 @@ String input = JOptionPane.showInputDialog(this, "Tarih girin (GG.AA.YYYY):");
 int selectedRow = jTable1.getSelectedRow();
     int selectedCol = jTable1.getSelectedColumn();
 
-    // 1. Gerekli seçimlerin yapılıp yapılmadığını kontrol et
     if (chosenDate == null) {
         JOptionPane.showMessageDialog(this, "Lütfen önce bir tarih seçin!");
         return;
@@ -230,13 +226,11 @@ int selectedRow = jTable1.getSelectedRow();
     String trainerName = jTable1.getValueAt(selectedRow, 0).toString();
     String timeSlot = jTable1.getColumnName(selectedCol);
 
-    // 2. ÇAKIŞMA KONTROLÜ
     List<User> allUsers = fm.readUsers("users.json");
     boolean isBusy = false;
 
     for (User u : allUsers) {
         if (u instanceof Member m) {
-            // Eğer başka bir üye, aynı hocadan, aynı tarihte ve aynı saatte randevu almışsa
             if (m.getAssignedTrainer() != null &&
                 m.getAssignedTrainer().equals(trainerName) &&
                 m.getAssignedDate().equals(chosenDate) &&
@@ -251,19 +245,16 @@ int selectedRow = jTable1.getSelectedRow();
     if (isBusy) {
         JOptionPane.showMessageDialog(this, "Seçtiğiniz saatte " + trainerName + " doludur. Lütfen başka bir saat veya hoca seçin.");
     } else {
-        // 3. KAYIT İŞLEMİ (Çakışma yoksa)
         currentMember.setAssignedTrainer(trainerName);
         currentMember.setAssignedDate(chosenDate);
         currentMember.setAssignedTimeSlot(timeSlot);
         
-        // Listeyi güncelle ve kaydet
         allUsers.removeIf(u -> u.getID().equals(currentMember.getID()));
         allUsers.add(currentMember);
         fm.writeAllUsers("users.json", allUsers);
         
         JOptionPane.showMessageDialog(this, "Randevunuz başarıyla alındı!");
         
-        // Önceki panele dönmek için (UserMainPanel)
         new UserMainPanel(currentMember).setVisible(true);
         this.dispose();
     }    }//GEN-LAST:event_jButton2ActionPerformed
@@ -272,7 +263,6 @@ int selectedRow = jTable1.getSelectedRow();
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    // ... try-catch bloğunun altındaki o satırı şu hale getir:
     java.awt.EventQueue.invokeLater(() -> new ProgramManagerPanel(new Member()).setVisible(true));
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
