@@ -13,8 +13,8 @@ package com.mycompany.java_project;
 public class Java_project {
 
     public static void main(String[] args) {
-        Admin admin =new Admin("12345678912","Aybike","Şİmşek","Vigor2026","admin");
-        File_Manager fm=new File_Manager();
+        Admin admin =new Admin("12345678912","Aybike","Şİmşek","Vigor2026","admin"); //Hocam bu kodu uygulamayı bir kere çalıştırdıktan sonra
+        File_Manager fm=new File_Manager();                                          //silmeniz çok daha efektif olcaktır. Teşekkürler.
         fm.saveUser("users.json", admin);
         
         java.awt.EventQueue.invokeLater(() -> {
