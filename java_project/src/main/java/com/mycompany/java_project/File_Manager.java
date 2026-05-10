@@ -19,6 +19,8 @@ import java.time.LocalDate;
  *
  * @author ASUS
  */
+
+
 public class File_Manager {
     Gson gson = new GsonBuilder()
     .registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
@@ -61,7 +63,6 @@ public class File_Manager {
                 if (json.trim().isEmpty()) continue;
 
                 JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
-                // BURASI DÜZELTİLDİ: user.getRole() yerine obj'den gelen role bakıyoruz
                 String role = obj.get("role").getAsString(); 
                 User user = null;
 
@@ -95,7 +96,7 @@ public class File_Manager {
            
             for(User u:userList){
                 String json=gson.toJson(u);//tekrardan silinen hariç her şeyi json formatına dönüştür
-                writer.write(json+"\n"); //dosayaya yaz ve aalt satıra geç
+                writer.write(json+"\n"); //dosayaya yaz ve alt satıra geç
             }
             writer.close();
             System.out.println("File updated successfully!");
