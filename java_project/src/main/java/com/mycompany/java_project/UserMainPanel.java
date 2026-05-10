@@ -124,7 +124,7 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
                 {null, null, null, null}
             },
             new String [] {
-                "Trainer Name", "Execise Type", "Hours", "Delete"
+                "Trainer Name", "Exercise Type", "Hours", "Delete"
             }
         ));
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {

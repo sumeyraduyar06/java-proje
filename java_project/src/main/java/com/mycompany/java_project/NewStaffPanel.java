@@ -57,7 +57,8 @@ public class NewStaffPanel extends javax.swing.JFrame {
 
         jLabel4.setText("Employee Type:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Swim Trainer", "Fitness Trainer", "Yoga Trainer", "Security Guard", "Cleaner" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Swim Trainer", "Fitness Trainer", "Pilates Trainer", "Security Guard", "Cleaner" }));
+        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
 
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
@@ -143,57 +144,49 @@ public class NewStaffPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_textField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      try {
+     try {
             String name = jTextField1.getText();
             String surname = jTextField2.getText();
             String id = jTextField3.getText();
             String type = jComboBox1.getSelectedItem().toString();
             String salaryStr = jTextField4.getText();
-            
+
             // Boş alan kontrolü
-            if(name.isEmpty() || surname.isEmpty() || id.isEmpty() || salaryStr.isEmpty()){
-                javax.swing.JOptionPane.showMessageDialog(this, "Lütfen maaş dahil tüm alanları doldurun!");
+            if (name.isEmpty() || surname.isEmpty() || id.isEmpty() || salaryStr.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Lütfen tüm alanları doldurun!");
                 return;
             }
 
-            double salary = Double.parseDouble(salaryStr); // Maaşı sayıya çeviriyoruz
-            String defaultPass = id; // İlk girişte şifre ID olsun
+            double salary = Double.parseDouble(salaryStr);
+            String defaultPass = id; 
             User newUser;
-            
-            // Antrenör branşlarını ve Staff ayrımını yapıyoruz
+
             if (type.contains("Trainer")) {
                 String branch = "General";
                 if (type.equals("Swim Trainer")) branch = "Swim";
                 else if (type.equals("Fitness Trainer")) branch = "Fitness";
-                else if (type.equals("Yoga Trainer")) branch = "Yoga";
+                else if (type.equals("Pilates Trainer")) branch = "Pilates"; // Yoga -> Pilates
 
-                // Trainer(id, name, surname, password, role, salary, entry, exit, hour, branch)
                 newUser = new Trainer(id, name, surname, defaultPass, "trainer", 
                                       salary, "-", "-", "-", branch);
             } else {
                 // Diğer personel rolleri (Security Guard, Cleaner)
-                String role = type.toLowerCase().replace(" ", "_"); // "security_guard" formatına getirir
-                // Staff(id, name, surname, password, role, salary, entry, exit, hour)
                 newUser = new Staff(id, name, surname, defaultPass, "staff", 
                                     salary, "-", "-", "-");
-                // Eğer rollerin tam olarak "staff" kalmasını istiyorsan direkt "staff" da yazabilirsin.
             }
 
-            // Dosyaya Kaydet
             File_Manager fm = new File_Manager();
             fm.saveUser("users.json", newUser);
 
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                type + " başarıyla eklendi!\nID ve Şifre: " + id + "\nBranş: " + 
-                (newUser instanceof Trainer ? ((Trainer)newUser).getBranch() : "N/A"));
-            
+            javax.swing.JOptionPane.showMessageDialog(this, type + " başarıyla eklendi!");
             this.dispose(); 
 
         } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Maaş alanına lütfen sadece rakam giriniz!");
+            javax.swing.JOptionPane.showMessageDialog(this, "Maaş alanına lütfen geçerli bir sayı giriniz!");
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Hata oluştu: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + e.getMessage());
         }
+            
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -203,6 +196,10 @@ public class NewStaffPanel extends javax.swing.JFrame {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

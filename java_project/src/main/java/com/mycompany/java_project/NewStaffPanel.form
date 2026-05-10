@@ -150,12 +150,15 @@
           <StringArray count="5">
             <StringItem index="0" value="Swim Trainer"/>
             <StringItem index="1" value="Fitness Trainer"/>
-            <StringItem index="2" value="Yoga Trainer"/>
+            <StringItem index="2" value="Pilates Trainer"/>
             <StringItem index="3" value="Security Guard"/>
             <StringItem index="4" value="Cleaner"/>
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>

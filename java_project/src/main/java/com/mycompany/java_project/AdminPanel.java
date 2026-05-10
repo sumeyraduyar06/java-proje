@@ -320,11 +320,15 @@ private void refreshAdminTables() {
     for (User u : allUsers) {
         if (u instanceof Member m) {
             memberModel.addRow(new Object[]{m.getID(), m.getName() + " " + m.getSurname(), m.getStartDate(), m.getEndDate(), "Sil"});
-        } else if (u instanceof Staff || u instanceof Trainer) {
-            staffModel.addRow(new Object[]{u.getID(), u.getName() + " " + u.getSurname(), u.getRole(), "Sil"});
-            if (u instanceof Staff s) {
-                timeModel.addRow(new Object[]{s.getName() + " " + s.getSurname(), s.getEntryHour(), s.getExitHour()});
-            }
+        } 
+        else if (u instanceof Trainer t) {
+            String branchInfo = (t.getBranch() != null) ? t.getBranch() : t.getRole();
+            staffModel.addRow(new Object[]{t.getID(), t.getName() + " " + t.getSurname(), branchInfo, "Sil"});
+        }
+        else if (u instanceof Staff s) {
+            staffModel.addRow(new Object[]{s.getID(), s.getName() + " " + s.getSurname(), s.getRole(), "Sil"});
+            
+            timeModel.addRow(new Object[]{s.getName() + " " + s.getSurname(), s.getEntryHour(), s.getExitHour()});
         }
     }
     hideColumn(jTable2, 0);

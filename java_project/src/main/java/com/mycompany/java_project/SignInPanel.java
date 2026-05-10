@@ -361,40 +361,50 @@ public class SignInPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField10ActionPerformed
     
-    //EĞER KAYDET BUTONUNA BASILIRSA GEREKLİ KONTROLLER YAPILACAK
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            String userID = txtTc.getText(); // ID alanını aldık
-            String password = new String(txtPassword.getPassword());
-            
-            // Member nesnesini dolu constructor ile oluşturuyoruz
-            // Parametreler: ID, Name, Surname, Password, Role, TC, Plan
-            Member newMember = new Member(
-                userID, 
-                txtName.getText(), 
-                txtSurname.getText(), 
-                password, 
-                "member", 
-                userID, 
-                Member.Membership.FITNESS // Varsayılan plan
-            );
+        String userID = txtTc.getText();
+        String password = new String(txtPassword.getPassword());
+        
+        String selectedPlanName = jComboBox1.getSelectedItem().toString();
+        Member.Membership selectedMembership;
 
-            // Ekstra detayları setle
-            newMember.setphoneNo(txtPhoneNo.getText());
-            newMember.setHeight(Integer.parseInt(txtHeight.getText()));
-            newMember.setWeight(Integer.parseInt(txtWeight.getText()));
-            newMember.setAge(Integer.parseInt(txtAge.getText()));
-
-            File_Manager fm = new File_Manager();
-            fm.saveUser("users.json", newMember); 
-
-            javax.swing.JOptionPane.showMessageDialog(this, "Kayıt Başarılı! ID: " + userID);
-            new LoginPanel().setVisible(true);
-            this.dispose();
-
-        } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + ex.getMessage());
+        if (selectedPlanName.equalsIgnoreCase("Classic")) {
+            selectedMembership = Member.Membership.FITNESS;
+        } else if (selectedPlanName.equalsIgnoreCase("Normal")) {
+            selectedMembership = Member.Membership.FITNESS_PILATES;
+        } else {
+            selectedMembership = Member.Membership.FITNESS_SWIMMING_PILATES;
         }
+
+        Member newMember = new Member(
+            userID, 
+            txtName.getText(), 
+            txtSurname.getText(), 
+            password, 
+            "member", 
+            userID, 
+            selectedMembership 
+        );
+
+        newMember.setphoneNo(txtPhoneNo.getText());
+        newMember.setHeight(Integer.parseInt(txtHeight.getText()));
+        newMember.setWeight(Integer.parseInt(txtWeight.getText()));
+        newMember.setAge(Integer.parseInt(txtAge.getText()));
+
+        newMember.setStartDate(java.time.LocalDate.now());
+        newMember.setEndDate(java.time.LocalDate.now().plusMonths(1));
+
+        File_Manager fm = new File_Manager();
+        fm.saveUser("users.json", newMember); 
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Kayıt Başarılı! Üyelik Tipi: " + selectedPlanName);
+        
+        this.dispose();
+
+    } catch (Exception ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Hata: " + ex.getMessage());
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed

@@ -38,32 +38,55 @@ package com.mycompany.java_project;
     }
     
     private void setupScheduleTable() {
-        String[] hours = {"08:00-10:00", "10:00-12:00", "13:00-15:00", "15:00-17:00"};
+    String[] hours = {"08:00-10:00", "10:00-12:00", "13:00-15:00", "15:00-17:00"};
     javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable2.getModel();
     model.setRowCount(0);
     
-    // 1. Sütun isimlerini (Tarihleri) hazırla
     String[] columnNames = new String[8];
     columnNames[0] = "Hours";
-    java.time.format.DateTimeFormatter dtf = java.time.format.DateTimeFormatter.ofPattern("dd.MM");
+    java.time.format.DateTimeFormatter dtf = java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy"); // Randevu paneliyle aynı format
+    java.time.LocalDate today = java.time.LocalDate.now();
     
     for (int i = 0; i < 7; i++) {
-        columnNames[i + 1] = java.time.LocalDate.now().plusDays(i).format(dtf);
+        columnNames[i + 1] = today.plusDays(i).format(java.time.format.DateTimeFormatter.ofPattern("dd.MM"));
     }
-    model.setColumnIdentifiers(columnNames); // Tablo başlıklarını güncelle
+    model.setColumnIdentifiers(columnNames);
 
-    // 2. Satırları doldur ve BOŞ/DOLU kontrolü yap
+    File_Manager fm = new File_Manager();
+    java.util.List<User> allUsers = fm.readUsers("users.json");
+
+    String currentTrainerFullName = (currentTrainer.getName() + " " + currentTrainer.getSurname()).trim();
+
     for (String hour : hours) {
         Object[] row = new Object[8];
         row[0] = hour;
-        for (int i = 1; i <= 7; i++) {
-            // ŞİMDİLİK: Rastgele veya Member verisinden gelen bir kontrol eklenebilir
-            // Gerçek projede burada bir 'checkIfTrainerIsBusy(trainer, date, hour)' metodu olmalı
-            row[i] = "BOŞ"; 
+
+        for (int i = 0; i < 7; i++) {
+            String dateToCheck = today.plusDays(i).format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+            
+            String status = "BOŞ";
+            for (User u : allUsers) {
+                if (u instanceof Member m) {
+                   
+                    
+                    String assignedT = m.getAssignedTrainer() != null ? m.getAssignedTrainer().trim() : "";
+                    String assignedD = m.getAssignedDate() != null ? m.getAssignedDate().trim() : "";
+                    String assignedS = m.getAssignedTimeSlot() != null ? m.getAssignedTimeSlot().trim() : "";
+
+                    if (assignedT.equalsIgnoreCase(currentTrainerFullName) &&
+                        assignedD.equals(dateToCheck) &&
+                        assignedS.equals(hour)) {
+                        
+                        status = "DOLU (" + m.getName() + ")"; 
+                        break; 
+                    }
+                }
+            }
+            row[i + 1] = status;
         }
         model.addRow(row);
     }
-    }
+}
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TrainerPanel.class.getName());
 
