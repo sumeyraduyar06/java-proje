@@ -1,4 +1,4 @@
-# VIGOR Health & Wellness System 💪
+# VIGOR Health & Wellness System 
 
 VIGOR, Java ve Swing kullanılarak geliştirilmiş kapsamlı bir spor salonu yönetim sistemidir. 
 Yöneticiler (Admin), eğitmenler (Trainer), personeller (Staff) ve üyeler (Member) için farklı modüller barındırır. 
@@ -25,14 +25,14 @@ Sistem, kullanıcıların rollerine göre farklı arayüzler ve yetkiler sunar:
 * **Personel (Staff) Paneli**:
     * Günlük giriş (Entry) ve çıkış (Exit) saatlerini kaydederek mesai takibi yapma.
 
-## ⚙️ Kurulum ve Çalıştırma
+## Kurulum ve Çalıştırma
 
 Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları izleyin:
 
 1. **Depoyu Klonlayın:**
    git clone [https://github.com/KULLANICI_ADINIZ/java-proje.git](https://github.com/sumeyraduyar06/java-proje.git)
 
-   **2. Projeyi IDE'ye Aktarın**
+**2. Projeyi IDE'ye Aktarın**
 * IDE'nizi açın.
 * **"Open Project"** 
 * Klonladığınız dizinin içindeki ana proje klasörünü (içinde pom.xml dosyasının bulunduğu dizin) seçip projeyi içe aktarın.
@@ -52,5 +52,5 @@ Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları i
 
 ---
 
-### ⚠️ Önemli Not (Veri Yönetimi)
+### Önemli Not (Veri Yönetimi)
 Sistem, veritabanı olarak **JSON** formatını kullanmaktadır. Projenin ana dizininde bulunan `users.json` dosyası, tüm kullanıcı (Admin, Üye, Eğitmen vb.) bilgilerini tutar. Uygulamanın verileri okuyup yazabilmesi için bu dosyanın silinmemesi veya yerinin değiştirilmemesi gerekmektedir.
